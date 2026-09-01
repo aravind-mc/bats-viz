@@ -8,19 +8,6 @@ let ready = false;
 /** @type {string | null} */
 let initError = null;
 
-const VENDOR = new URL("../vendor/duckdb/", import.meta.url).href;
-
-const LOCAL_BUNDLES = {
-  mvp: {
-    mainModule: `${VENDOR}duckdb-mvp.wasm`,
-    mainWorker: `${VENDOR}duckdb-browser-mvp.worker.js`,
-  },
-  eh: {
-    mainModule: `${VENDOR}duckdb-eh.wasm`,
-    mainWorker: `${VENDOR}duckdb-browser-eh.worker.js`,
-  },
-};
-
 export function isDuckDBReady() {
   return ready;
 }
@@ -36,10 +23,10 @@ export function getDuckDBError() {
  */
 export async function initDuckDB(reports, scores, dims) {
   try {
-    duckdbModule = await import(`${VENDOR}duckdb-browser.mjs`);
+    duckdbModule = await import("@duckdb/duckdb-wasm");
     const duckdb = duckdbModule;
-    const bundle = await duckdb.selectBundle(LOCAL_BUNDLES);
-    const worker = new Worker(bundle.mainWorker);
+    const bundle = await duckdb.selectBundle(duckdb.getJsDelivrBundles());
+    const worker = await duckdb.createWorker(bundle.mainWorker);
     const logger = new duckdb.ConsoleLogger();
     db = new duckdb.AsyncDuckDB(logger, worker);
     await db.instantiate(bundle.mainModule, bundle.pthreadWorker);

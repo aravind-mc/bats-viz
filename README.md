@@ -6,6 +6,14 @@ In-browser: DuckDB-Wasm + JSON. **Gallery** of 25 charts (no SQL required); **SQ
 
 Data: `/data` (reports, scores, dims). MIT license.
 
+DuckDB-Wasm loads from jsDelivr at runtime (not vendored — Cloudflare Pages caps deploy assets at 25 MiB per file).
+
+## Deploy (Cloudflare Pages)
+
+- **Build command:** leave empty (static site)
+- **Output directory:** `/`
+- No `vendor/duckdb/` in the repo; WASM is fetched from CDN on first load
+
 ## WebMCP
 
 Feature-detect `document.modelContext || navigator.modelContext`. Ten tools in `js/webmcp.js`:
