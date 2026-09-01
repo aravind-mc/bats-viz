@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BATS Visualisation</title>
+  <link rel="stylesheet" href="css/app.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "apache-arrow": "https://cdn.jsdelivr.net/npm/apache-arrow@17.0.0/+esm"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <h1>BATS Visualisation</h1>
+      <div id="status" class="status">Loading…</div>
+    </div>
+  </header>
+
+  <section class="filters" aria-label="Global filters">
+    <div class="filter">
+      <label for="filter-sectors">Sector</label>
+      <select id="filter-sectors" multiple size="4" aria-label="Filter by sector"></select>
+    </div>
+    <div class="filter">
+      <label for="filter-min">Min BATS</label>
+      <input type="number" id="filter-min" min="0" max="100" placeholder="0">
+    </div>
+    <div class="filter">
+      <label for="filter-max">Max BATS</label>
+      <input type="number" id="filter-max" min="0" max="100" placeholder="100">
+    </div>
+    <label class="filter-check">
+      <input type="checkbox" id="filter-zeros">
+      Zeros only
+    </label>
+  </section>
+
+  <nav class="tabs" aria-label="Primary navigation">
+    <button type="button" class="tab active" data-tab="gallery">Gallery</button>
+    <button type="button" class="tab" data-tab="sql">SQL</button>
+  </nav>
+
+  <main id="gallery" class="gallery" aria-label="Chart gallery"></main>
+
+  <aside id="selection-panel" class="selection-panel" hidden aria-label="Selection details">
+    <div class="selection-panel-head">
+      <h2 class="selection-title">—</h2>
+      <button type="button" class="selection-close" aria-label="Close panel">×</button>
+    </div>
+    <p class="selection-meta"></p>
+    <div class="selection-dims"></div>
+    <button type="button" class="selection-open-report">Open report</button>
+  </aside>
+
+  <section id="sql-panel" class="sql-panel" hidden aria-label="SQL workspace"></section>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
